@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security · 3329lens</title>
+<meta name="description" content="How to report a security issue in 3329lens, what we treat as in scope, and how we respond.">
+<link rel="canonical" href="https://3329lens.dev/security/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/">3329lens</a>
+    <nav class="site" aria-label="Main">
+      <ul>
+        <li><a href="/pricing/">Pricing</a></li>
+        <li><a href="/security/" aria-current="page">Security</a></li>
+        <li><a href="https://docs.rs/lens3329">API docs</a></li>
+        <li><a href="https://github.com/3329lens/3329lens">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h1>Security</h1>
+    <p class="lede">Please report security issues privately. Do not open a public issue.</p>
+
+    <h2>Reporting</h2>
+    <ul>
+      <li><strong>GitHub</strong> (preferred): use
+      <a href="https://github.com/3329lens/3329lens/security/advisories/new">private
+      vulnerability reporting</a>. It keeps the report, the fix and the advisory in one
+      place.</li>
+      <li><strong>Email</strong>: <a href="mailto:security@3329lens.dev">security@3329lens.dev</a>,
+      if you would rather not use GitHub.</li>
+    </ul>
+    <p>Include the 3329lens version, the command you ran, the input that triggered the problem
+    (a minimal manifest, lockfile or advisory file is ideal) and what you expected instead.</p>
+
+    <h2>What to expect</h2>
+    <div class="table-wrap">
+    <table>
+      <tbody>
+        <tr><th scope="row">Acknowledgement</th><td>Within 3 working days</td></tr>
+        <tr><th scope="row">Initial assessment</th><td>Within 10 working days: whether it is in scope, and a severity</td></tr>
+        <tr><th scope="row">Fix or mitigation</th><td>Target 90 days from acknowledgement, sooner for high severity</td></tr>
+        <tr><th scope="row">Credit</th><td>Offered in the advisory and release notes unless you ask us not to</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>We follow coordinated disclosure and do not operate a paid bug bounty. Security fixes are
+    issued for the latest published version only.</p>
+
+    <h2>What counts as a security issue</h2>
+    <p>For a scanner, the security-relevant failure is usually not memory safety. It is
+    reporting the wrong answer about someone else's security. These are treated as
+    vulnerabilities, not ordinary bugs:</p>
+    <ul>
+      <li><strong>Silent false negatives</strong>: a vulnerable package that isn't reported, or
+      <code>--fail-on</code> passing when it should have failed.</li>
+      <li>An advisory database that loads no advisories without an error.</li>
+      <li>Cross-ecosystem mismatches, such as a crates.io advisory matching a same-named npm
+      package.</li>
+      <li>Path traversal or unintended writes while scanning or writing output.</li>
+      <li>Crashes, hangs or unbounded memory on hostile manifests, lockfiles or advisory
+      databases.</li>
+      <li>Any network traffic at all: the scanner is offline by design.</li>
+    </ul>
+    <p>The full policy, including what is out of scope, is in
+    <a href="https://github.com/3329lens/3329lens/blob/main/SECURITY.md">SECURITY.md</a>.
+    Machine-readable contact details are in
+    <a href="/.well-known/security.txt">security.txt</a>.</p>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <ul>
+      <li><a href="/pricing/">Pricing</a></li>
+      <li><a href="/terms/">Terms</a></li>
+      <li><a href="/refunds/">Refunds</a></li>
+      <li><a href="/privacy/">Privacy</a></li>
+      <li><a href="/security/">Security</a></li>
+      <li><a href="mailto:contact@3329lens.dev">contact@3329lens.dev</a></li>
+    </ul>
+    <p>3329lens is developed by Lomyen Ltd, registered in England and Wales, company number
+    17384504. Registered office: 61 Bridge Street, Kington, HR5 3DJ, United Kingdom.</p>
+    <p>Site content &copy; 2026 Lomyen Ltd. All rights reserved. The 3329lens software is
+    licensed under the Apache License 2.0.</p>
+  </div>
+</footer>
+</body>
+</html>

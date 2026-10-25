@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://3329lens.dev/sitemap.xml

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3329lens</title>
+<meta name="description" content="Cryptographic inventory scanner: finds the cryptography a codebase depends on, resolves versions from lockfiles, correlates them offline against advisories, and exports CycloneDX CBOM or SARIF.">
+<link rel="canonical" href="https://3329lens.dev/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="3329lens">
+<meta property="og:title" content="3329lens: cryptographic inventory scanner">
+<meta property="og:description" content="What cryptography is in your codebase, and which of it breaks when a quantum computer arrives. Offline, open source, CBOM and SARIF output.">
+<meta property="og:url" content="https://3329lens.dev/">
+<meta name="twitter:card" content="summary">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/">3329lens</a>
+    <nav class="site" aria-label="Main">
+      <ul>
+        <li><a href="/pricing/">Pricing</a></li>
+        <li><a href="/security/">Security</a></li>
+        <li><a href="https://docs.rs/lens3329">API docs</a></li>
+        <li><a href="https://github.com/3329lens/3329lens">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h1>A cryptographic inventory for your codebase</h1>
+    <p class="lede">3329lens walks a codebase, finds the cryptography it depends on, resolves real
+    versions from lockfiles, correlates them against an offline advisory database, and exports the
+    result as a CycloneDX CBOM or a SARIF log.</p>
+
+    <pre><code>cargo install --locked lens3329      # installs the `3329lens` binary
+3329lens scan --path ./my-project</code></pre>
+
+    <p>Open source under the Apache License 2.0. Everything runs offline: the scanner makes no
+    network requests.</p>
+
+    <h2>Two questions it answers</h2>
+    <ul>
+      <li><strong>What cryptography is actually in here?</strong> Including crypto pulled in
+      transitively, with the versions your lockfiles really resolve to.</li>
+      <li><strong>Which of it breaks when a cryptographically relevant quantum computer
+      arrives?</strong> Each finding is flagged for quantum risk, and the interactive dashboard
+      builds a prioritised post-quantum migration plan.</li>
+    </ul>
+
+    <h2>What it does</h2>
+    <ul>
+      <li><strong>Detects</strong> binary artefacts (<code>.so</code>, <code>.dll</code>,
+      <code>.dylib</code>, <code>.a</code>) and declared dependencies in <code>Cargo.toml</code>,
+      <code>package.json</code>, <code>requirements.txt</code>, <code>pyproject.toml</code> and
+      <code>Pipfile</code>.</li>
+      <li><strong>Resolves versions</strong> from <code>Cargo.lock</code>,
+      <code>package-lock.json</code>, <code>npm-shrinkwrap.json</code>, <code>poetry.lock</code>
+      and <code>Pipfile.lock</code>.</li>
+      <li><strong>Correlates</strong> lockfile-resolved versions against a local RustSec
+      <code>advisory-db</code> clone or an OSV export, with ecosystem-aware version comparison
+      (semver for Cargo and npm, PEP 440 for PyPI).</li>
+      <li><strong>Exports</strong> text, JSON, CycloneDX 1.6 CBOM and SARIF 2.1.0.</li>
+      <li><strong>Shows it live</strong> in a terminal dashboard with scan, category, statistics
+      and migration views.</li>
+    </ul>
+
+    <h2>Gate your CI on it</h2>
+    <pre><code>git clone --depth 1 https://github.com/rustsec/advisory-db
+3329lens scan --path . --advisory-db ./advisory-db --fail-on high</code></pre>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Exit code</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>0</code></td><td>Success: no finding met the <code>--fail-on</code> threshold</td></tr>
+        <tr><td><code>1</code></td><td>Operational error (bad path, unreadable database, write failure)</td></tr>
+        <tr><td><code>2</code></td><td>A vulnerability at or above the threshold was found</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>An advisory database that yields no usable advisories is a hard error, not an empty
+    result. "Nothing matched" because nothing loaded would look exactly like a clean bill of
+    health, and would let the CI gate pass for the wrong reason.</p>
+    <p>For GitHub code scanning, write <code>--format sarif</code> and upload the result with
+    <code>github/codeql-action/upload-sarif</code>. Severity is mapped so GitHub buckets
+    findings correctly.</p>
+
+    <h2>Scope and limitations</h2>
+    <ul>
+      <li>Algorithm assets in the CBOM are inferred from library identity, not observed at
+      runtime: they mean "this library can do X", not "X is invoked". Versions and transitive
+      dependencies are evidence-based, from lockfiles.</li>
+      <li>Only lockfile-resolved versions are correlated. Declared ranges such as
+      <code>^1.2</code> are skipped rather than guessed.</li>
+      <li>Advisory coverage is limited to the database you supply and to the Cargo, npm and
+      PyPI ecosystems. Run it alongside <code>cargo audit</code>, <code>npm audit</code> or
+      <code>pip-audit</code>, not instead of them.</li>
+      <li>Quantum-risk flags are a property of the algorithm, not of how you use it.</li>
+    </ul>
+
+    <h2>Why 3329?</h2>
+    <p>3329 is the modulus <em>q</em> of ML-KEM (Kyber), the post-quantum key encapsulation
+    mechanism standardised by NIST in FIPS 203.</p>
+
+    <h2>3329lens or lens3329?</h2>
+    <p>The product, the command, the domain and the GitHub organisation are all
+    <strong>3329lens</strong>. The Rust crate is published as <strong>lens3329</strong> because
+    Cargo rejects package names that start with a digit. Install <code>lens3329</code> to get the
+    <code>3329lens</code> command, or depend on it with <code>default-features = false</code> to
+    embed the scanning core in your own program.</p>
+
+    <h2>Documentation</h2>
+    <p>The <a href="https://github.com/3329lens/3329lens#readme">README</a> is the reference:
+    per-platform install steps, every output format, the dashboard's keys and the library API.
+    API documentation is on <a href="https://docs.rs/lens3329">docs.rs</a>, and release history
+    is in the <a href="https://github.com/3329lens/3329lens/blob/main/CHANGELOG.md">changelog</a>.</p>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <ul>
+      <li><a href="/pricing/">Pricing</a></li>
+      <li><a href="/terms/">Terms</a></li>
+      <li><a href="/refunds/">Refunds</a></li>
+      <li><a href="/privacy/">Privacy</a></li>
+      <li><a href="/security/">Security</a></li>
+      <li><a href="mailto:contact@3329lens.dev">contact@3329lens.dev</a></li>
+    </ul>
+    <p>3329lens is developed by Lomyen Ltd, registered in England and Wales, company number
+    17384504. Registered office: 61 Bridge Street, Kington, HR5 3DJ, United Kingdom.</p>
+    <p>Site content &copy; 2026 Lomyen Ltd. All rights reserved. The 3329lens software is
+    licensed under the Apache License 2.0.</p>
+  </div>
+</footer>
+</body>
+</html>

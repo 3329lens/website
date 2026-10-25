@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pricing · 3329lens</title>
+<meta name="description" content="3329lens is free and open source. 3329lens Pro, an annual subscription per organisation, is coming soon.">
+<link rel="canonical" href="https://3329lens.dev/pricing/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="/">3329lens</a>
+    <nav class="site" aria-label="Main">
+      <ul>
+        <li><a href="/pricing/" aria-current="page">Pricing</a></li>
+        <li><a href="/security/">Security</a></li>
+        <li><a href="https://docs.rs/lens3329">API docs</a></li>
+        <li><a href="https://github.com/3329lens/3329lens">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h1>Pricing</h1>
+    <p class="lede">The scanner is free and open source, and it will stay that way. A paid
+    edition for teams is in development.</p>
+
+    <div class="tiers">
+      <section class="tier" aria-labelledby="tier-free">
+        <h3 id="tier-free">3329lens</h3>
+        <p class="price">Free</p>
+        <p>Apache License 2.0. Use it commercially, in CI, anywhere.</p>
+        <ul>
+          <li>Crypto library and dependency discovery</li>
+          <li>Lockfile version resolution for Cargo, npm and PyPI</li>
+          <li>Offline advisory correlation (RustSec, OSV)</li>
+          <li>CycloneDX 1.6 CBOM and SARIF 2.1.0 export</li>
+          <li>CI gating with <code>--fail-on</code></li>
+          <li>Interactive terminal dashboard</li>
+        </ul>
+        <p><a class="button" href="https://github.com/3329lens/3329lens#install">Install</a></p>
+      </section>
+
+      <section class="tier" aria-labelledby="tier-pro">
+        <h3 id="tier-pro">3329lens Pro</h3>
+        <p class="price">Coming soon</p>
+        <p>An annual subscription per organisation, renewing automatically, cancel any time.</p>
+        <!-- TODO: list the Pro features once they are settled. -->
+        <ul>
+          <li>Everything in 3329lens</li>
+          <li>Additional features for teams, to be announced</li>
+        </ul>
+        <p><span class="button" aria-disabled="true">Not yet available</span></p>
+      </section>
+    </div>
+
+    <h2>Questions</h2>
+    <h3>Will the free version lose features?</h3>
+    <p>No. Everything in the open-source scanner today stays in it, under the same licence.</p>
+
+    <h3>Who handles payment?</h3>
+    <p>Orders will be processed by <a href="https://polar.sh">Polar</a>, our online reseller and
+    Merchant of Record. Polar takes the payment, charges the right sales tax or VAT for your
+    country, and issues the invoice. Card details go to Polar's payment processor and never
+    reach us.</p>
+
+    <h3>How is a Pro licence checked?</h3>
+    <p>Offline. 3329lens does not send your code, your inventory or any data about your machine
+    anywhere, and a Pro licence will not change that.</p>
+
+    <h3>Refunds and cancellation?</h3>
+    <p>See the <a href="/refunds/">refund policy</a> and the <a href="/terms/">terms</a>.</p>
+
+    <p>Questions about Pro, or interested in early access? Email
+    <a href="mailto:contact@3329lens.dev">contact@3329lens.dev</a>.</p>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <ul>
+      <li><a href="/pricing/">Pricing</a></li>
+      <li><a href="/terms/">Terms</a></li>
+      <li><a href="/refunds/">Refunds</a></li>
+      <li><a href="/privacy/">Privacy</a></li>
+      <li><a href="/security/">Security</a></li>
+      <li><a href="mailto:contact@3329lens.dev">contact@3329lens.dev</a></li>
+    </ul>
+    <p>3329lens is developed by Lomyen Ltd, registered in England and Wales, company number
+    17384504. Registered office: 61 Bridge Street, Kington, HR5 3DJ, United Kingdom.</p>
+    <p>Site content &copy; 2026 Lomyen Ltd. All rights reserved. The 3329lens software is
+    licensed under the Apache License 2.0.</p>
+  </div>
+</footer>
+</body>
+</html>
